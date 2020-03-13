@@ -1,16 +1,40 @@
-def factorial(x: Int): Int = {
-  @scala.annotation.tailrec
-  def fact(x: Int, accum: Int): Int = {
-    if (x <= 1) accum
-    else fact(x - 1, x * accum)
-  }
-  fact(x, 1)
+val divide = new PartialFunction[Int, Int] {
+  override def isDefinedAt(x: Int) = x != 0
+
+  override def apply(v1: Int) = 42 / v1
 }
 
-factorial(3)
-factorial(4)
-factorial(5)
-factorial(6)
+val notDivide = new PartialFunction[Int, Int] {
+  override def isDefinedAt(x: Int) = x != 0
 
-val numbers = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-val res = numbers.foldRight(0)((m, n) => m - n)
+  override def apply(v1: Int) = -1
+}
+
+val mock = new PartialFunction[Int, Int] {
+  override def isDefinedAt(x: Int) = true
+
+  override def apply(v1: Int) = -100
+}
+
+val newDivide = divide
+newDivide.lift(0)
+val number = newDivide.lift
+number(0)
+
+val incrementor = new PartialFunction[Int, Int] {
+  override def isDefinedAt(x: Int) = x >= 0
+
+  override def apply(v1: Int) = v1 + 1
+}
+
+val shell = incrementor.lift
+shell(-1)
+shell(0)
+shell(100)
+
+val range = Range(-10, 10)
+//range map divide
+range map divide.lift
+range collect divide
+
+scala.concurrent.ExecutionContext.global

@@ -1,5 +1,3 @@
-def listReplication(num: Int, arr: List[Int]): List[Int] =
-  arr.flatMap(List.fill(num)(_))
 
 def f(arr: List[Int]): List[Int] =
   arr.drop(1).sliding(1, 2).flatten.toList
@@ -46,4 +44,3 @@ def summation(func:(List[Int],List[Int],Double)=>Double,
   val interval = BigDecimal(lowerLimit) to BigDecimal(upperLimit) by BigDecimal(step)
   interval.foldLeft(0.0){case (acc, x) => acc + func(coefficients, powers, x.toDouble)*step}
 }
-
